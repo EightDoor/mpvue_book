@@ -1,6 +1,6 @@
 # my-project
 
-> A Mpvue project
+> 个人图书(小程序,扫码录入图书) 使用mpvue,后端使用koa2+mysql
 
 ## Build Setup
 
