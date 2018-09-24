@@ -1,30 +1,15 @@
 <template>
   <div>
-      <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button>
+    我的信息页面
   </div>
 </template>
 
 <script>
-import config from "../../config";
-import qcloud from "wafer2-client-sdk";
 export default {
-  data() {
-    return {};
-  },
-  methods: {
-    doLogin: function(e) {
-      qcloud.setLoginUrl(config.loginUrl);
-      qcloud.login({
-        success: function(userInfo) {
-          console.log("登录成功", userInfo);
-        },
-        fail: function(err) {
-          console.log("登录失败", err);
-        }
-      });
-    }
+  data () {
+    return {}
   }
-};
+}
 </script>
 
 <style>

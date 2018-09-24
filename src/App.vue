@@ -1,51 +1,55 @@
 <template>
   <div>
-      <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="doLogin">获取用户信息</button>
+      
   </div>
 </template>
 
 <script>
-import config from "./config";
-import qcloud from "wafer2-client-sdk";
+import config from './config'
+import qcloud from 'wafer2-client-sdk'
+import { ShowSuccess } from '@/utils/utils'
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
-    doLogin: function() {
-      const session = qcloud.Session.get();
-
-      if (session) {
-        // 第二次登录
-        // 或者本地已经有登录态
-        // 可使用本函数更新登录态
-        qcloud.loginWithCode({
-          success: res => {
-            this.setData({ userInfo: res, logged: true });
-            util.showSuccess("登录成功");
-          },
-          fail: err => {
-            console.error(err);
-            util.showModel("登录错误", err.message);
-          }
-        });
-      } else {
-        // 首次登录
+    doLogin: function (e) {
+      let Status = wx.getStorageSync('userInfo')
+      if (!Status) {
+        qcloud.setLoginUrl(config.loginUrl)
         qcloud.login({
-          success: res => {
-            this.setData({ userInfo: res, logged: true });
-            util.showSuccess("登录成功");
+          success: function (userInfo) {
+            console.log('登录成功', userInfo)
+            wx.setStorageSync('userInfo', userInfo)
+            ShowSuccess('登录成功')
           },
-          fail: err => {
-            console.error(err);
-            util.showModel("登录错误", err.message);
+          fail: function (err) {
+            console.log('登录失败', err)
           }
-        });
+        })
       }
     }
+  },
+  created () {
+    // this.doLogin();
   }
-};
+}
 </script>
 
-<style>
+<style lang="scss">
+.btn {
+  color:white;
+  background:#EA5A49;
+  margin-bottom:10rpx;
+  padding-left:15rpx;
+  padding-right:15rpx;
+  border-radius:2rpx;
+  font-size:16rpx;
+  line-height:40rpx;
+  height:40rpx;
+  width:100%;
+  :active{
+    background:#FA5A49;
+  }
+}
 </style>
