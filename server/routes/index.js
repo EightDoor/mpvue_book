@@ -33,6 +33,8 @@ router.get('/message', controllers.message.get)
 router.post('/message', controllers.message.post)
 //新增图书
 router.post('/addBook',controllers.addBook);
+//图书列表
+router.get('/booklist',controllers.booklist);
 //demo测试数据
 router.get('/demo',controllers.demo);
 module.exports = router

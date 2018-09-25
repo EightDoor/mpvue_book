@@ -9,7 +9,7 @@ export function post(url, data) {
 export function request(url, method, data, ) {
   return new Promise((resolve, reject) => {
     wx.request({
-      data,
+      data,    
       method,
       url: config.host + url,
       success: function (res) {
