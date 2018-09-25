@@ -5,10 +5,10 @@
       </div>
       <div class="detail">
          <div class="row">
-           <div class="right">
+           <div class="right text-primary">
              {{book.rate}} <Rate :value="book.rate"></Rate>
            </div>
-           <div class="letf">
+           <div class="letf text-primary">
              {{book.title}}
            </div>
          </div>
@@ -20,7 +20,7 @@
              {{book.author}}
            </div>
          </div>
-         <div class="row">
+         <div class="row ">
            <div class="right">
              添加人
            </div>
