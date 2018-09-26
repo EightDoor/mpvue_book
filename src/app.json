@@ -5,7 +5,8 @@
     "pages/index/main",
     "pages/logs/main",
     "pages/counter/main",
-    "pages/todo/main"
+    "pages/todo/main",
+    "pages/detail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
