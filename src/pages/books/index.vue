@@ -1,5 +1,6 @@
 <template>
   <div id="id">
+      <TopSwiper :tops="tops"></TopSwiper>
       <card v-for="(val,index) in list" :key="index" :book = "val">
       </card>
       <p class="text-footer" v-if="!more">
@@ -12,12 +13,14 @@
 import { get, request } from "@/utils/utils";
 import config from "../../config";
 import card from "@/components/card";
+import TopSwiper from "@/components/TopSwiper";
 export default {
   data() {
     return {
       list: [],
       page: 0,
-      more: true
+      more: true,
+      tops:[],
     };
   },
   methods: {
@@ -39,14 +42,20 @@ export default {
         this.list = this.list.concat(res.list);
       }
       wx.hideNavigationBarLoading();
+    },
+    async getTop(){
+      const tops = await get('/weapp/top');
+      this.tops = tops.list;
     }
   },
   created() {
     this.getList(true);
+    this.getTop();
   },
   onPullDownRefresh() {
     this.getList(true);
     console.log("下拉");
+    this.getTop();
   },
   onReachBottom(){
     //没有更多了
@@ -58,7 +67,8 @@ export default {
     this.getList();
   },
   components: {
-    card
+    card,
+    TopSwiper
   }
 };
 </script>

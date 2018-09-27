@@ -35,6 +35,10 @@ router.post('/message', controllers.message.post)
 router.post('/addBook',controllers.addBook);
 //图书列表
 router.get('/booklist',controllers.booklist);
+//增加点击的数量
+router.get('/bookdetail',controllers.bookdetail);
+//获取排行榜信息
+router.get('/top',controllers.top);
 //demo测试数据
 router.get('/demo',controllers.demo);
 module.exports = router
