@@ -18,7 +18,7 @@ module.exports = async (ctx, next) => {
         const rate = bookinfo.rating.average;
         const { title, image, alt, publisher, summary, price } = bookinfo;
         const tags = bookinfo.tags.map(v => {
-            return `${v.title}${v.count}`
+            return `${v.title} ${v.count}`
         }).join(',');
         const author = bookinfo.author.join(',');
         try {
