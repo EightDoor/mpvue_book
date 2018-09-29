@@ -44,6 +44,12 @@ export default {
 .text-primary{
   color:#EA5A49;
 }
+.page-title{
+  padding-left:20px;
+  background:#eee;
+  line-height:40px;
+  font-size:14px;
+}
 .btn {
   color:white;
   background:#EA5A49;

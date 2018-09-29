@@ -39,6 +39,10 @@ router.get('/booklist',controllers.booklist);
 router.get('/bookdetail',controllers.bookdetail);
 //获取排行榜信息
 router.get('/top',controllers.top);
+//评论
+router.post('/addcomment',controllers.addcomment);
+//获取图书的评论列表
+router.get('/commentlist',controllers.commentlist);
 //demo测试数据
 router.get('/demo',controllers.demo);
 module.exports = router

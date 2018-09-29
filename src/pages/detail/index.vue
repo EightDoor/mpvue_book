@@ -1,6 +1,7 @@
 <template>
     <div id="id">
         <BookInfo :info="info" :userInfo="userInfo"></BookInfo>
+        <commentsList :comments="comments"></commentsList>
         <div v-if="commentStatus">
         <div class="comment">
             <textarea v-model="comment" class="textarea" :maxlength="100" placeholder="请输入图书短评"></textarea>
@@ -22,8 +23,9 @@
     </div>
 </template>
 <script>
-import { get } from "@/utils/utils";
+import { get,post,ShowModal } from "@/utils/utils";
 import BookInfo from "@/components/BookInfo";
+import commentsList from "@/components/commentsList";
 export default {
   data() {
     return {
@@ -34,7 +36,8 @@ export default {
       localtion: "",
       phone: "",
       openid: "",
-      commentStatus: false
+      commentStatus: false,
+      comments:[],
     };
   },
   mounted() {
@@ -44,6 +47,7 @@ export default {
       this.commentStatus = true;
     }
     this.getDetail();
+    this.getComment();
   },
   methods: {
     async getDetail() {
@@ -54,15 +58,29 @@ export default {
       this.info = info;
       this.userInfo = info.user_info;
     },
-    addComment() {
+    async addComment() {
+      if(!this.comment){
+        return 
+      }
       const data = {
         bookid: this.bookid,
         comment: this.comment,
         phone: this.phone,
-        localtion: this.localtion,
+        location: this.localtion,
         openid: this.openid.openId,
       };
-      console.log(data);
+      try {
+        await post('/weapp/addcomment',data); 
+        this.comment = '';
+        ShowModal("评论成功");
+      } catch (error) {
+        ShowModal('失败',error.msg);
+      }
+      console.log(info);
+    },
+    async getComment(){
+      const comments = await get('/weapp/commentlist',{bookid:this.bookid});
+      this.comments = comments.list;
     },
     GetGeo(e) {
       let url = "http://api.map.baidu.com/geocoder/v2/";
@@ -103,7 +121,8 @@ export default {
     }
   },
   components: {
-    BookInfo
+    BookInfo,
+    commentsList
   }
 };
 </script>
