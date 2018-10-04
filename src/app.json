@@ -2,7 +2,6 @@
   "pages": [
     "pages/books/main",
     "pages/me/main",
-    "pages/index/main",
     "pages/logs/main",
     "pages/counter/main",
     "pages/todo/main",

@@ -1,9 +1,9 @@
 <template>
     <div class="comment-list">
         <div class="page-title">
-            我的评论
+            评论
         </div>
-        <div class="comment" v-for="(comment,index) in comments" :key="index">
+        <div class="comment" @click="handleClick(comment)" v-for="(comment,index) in comments" :key="index">
             <div class="user">
                 <div class="inline">
                     <img :src="comment.image" class="avatar" mode="aspecyFit">
@@ -29,7 +29,16 @@ export default {
   data() {
     return {};
   },
-  props: ["comments"]
+  props: ["comments",'type'],
+  methods:{
+      handleClick(item){
+          if(this.type === 'user'){
+              wx.navigateTo({
+                  url:"/pages/detail/main?id="+item.bookid,
+              })
+          } 
+      }
+  }
 };
 </script>
 <style scoped lang="scss">

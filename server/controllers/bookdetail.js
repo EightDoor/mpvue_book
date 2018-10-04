@@ -15,6 +15,7 @@ module.exports = async (ctx,next) => {
         user_info:{
             name:info.nickName,
             image:info.avatarUrl,
+            openId:info.openId,
         }
     })
     await mysql('books')

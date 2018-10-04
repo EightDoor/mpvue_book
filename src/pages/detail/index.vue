@@ -20,10 +20,14 @@
             评论 
         </button>
         </div>
+        <div v-else class="text-footer">
+          未登录或者已经评论过了
+        </div>
+        <button open-type="share"  class="bth bth_info">转发给好友</button>
     </div>
 </template>
 <script>
-import { get,post,ShowModal } from "@/utils/utils";
+import { get, post, ShowModal } from "@/utils/utils";
 import BookInfo from "@/components/BookInfo";
 import commentsList from "@/components/commentsList";
 export default {
@@ -36,18 +40,29 @@ export default {
       localtion: "",
       phone: "",
       openid: "",
-      commentStatus: false,
-      comments:[],
+      comments: []
     };
   },
   mounted() {
     this.bookid = this.$root.$mp.query.id;
     this.openid = wx.getStorageSync("userInfo");
-    if (this.openid) {
-      this.commentStatus = true;
-    }
     this.getDetail();
     this.getComment();
+    console.log(this.userInfo);
+    console.log(this.comments);
+  },
+  computed: {
+    commentStatus() {
+      // 未登录
+      if (!this.openid) {
+        return false;
+      }
+      // 评论列表是否包含openId
+      if (this.comments.filter(v => v.openid == this.userInfo.openId).length) {
+        return false;
+      }
+      return true;
+    }
   },
   methods: {
     async getDetail() {
@@ -59,27 +74,28 @@ export default {
       this.userInfo = info.user_info;
     },
     async addComment() {
-      if(!this.comment){
-        return 
+      if (!this.comment) {
+        return;
       }
       const data = {
         bookid: this.bookid,
         comment: this.comment,
         phone: this.phone,
         location: this.localtion,
-        openid: this.openid.openId,
+        openid: this.openid.openId
       };
       try {
-        await post('/weapp/addcomment',data); 
-        this.comment = '';
+        await post("/weapp/addcomment", data);
+        this.comment = "";
         ShowModal("评论成功");
+        this.getComment();
       } catch (error) {
-        ShowModal('失败',error.msg);
+        ShowModal("失败", error.msg);
       }
       console.log(info);
     },
-    async getComment(){
-      const comments = await get('/weapp/commentlist',{bookid:this.bookid});
+    async getComment() {
+      const comments = await get("/weapp/commentlist", { bookid: this.bookid });
       this.comments = comments.list;
     },
     GetGeo(e) {
@@ -141,6 +157,21 @@ export default {
 }
 .phone {
   margin-top: 10px;
+}
+.bth_info {
+  color:white;
+  background:#EA5A49;
+  margin-bottom:10px;
+  padding-left:15px;
+  padding-right:15px;
+  border-radius:2px;
+  font-size:16px;
+  line-height:40px;
+  height:40px;
+  width:100%;
+  :active{
+    background:#FA5A49;
+  }
 }
 </style>
 

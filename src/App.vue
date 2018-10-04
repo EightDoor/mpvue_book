@@ -40,6 +40,7 @@ export default {
 .text-footer{
   text-align:center;
   font-size:12px;
+  margin-bottom:10rpx;
 }
 .text-primary{
   color:#EA5A49;
@@ -61,6 +62,7 @@ export default {
   line-height:40rpx;
   height:40rpx;
   width:100%;
+  margin-bottom:10rpx;
   :active{
     background:#FA5A49;
   }
